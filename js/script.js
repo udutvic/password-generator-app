@@ -33,7 +33,7 @@ DOMHandler.rangeInput.addEventListener('input', function () {
 //NOTE - CharacterHandler
 const CharacterHandler = (() => {
   const symbols = [
-    "~", "`", "!", "@", "#", "$", "%", "^", "&", "*",
+    "~", "", "!", "@", "#", "$", "%", "^", "&", "*",
     "(", ")", "_", "-", "+", "=", "{", "}", "[", "]",
     "|", ":", ";", "'", "<", ">", ",", ".", "?", "/"
   ];
@@ -113,6 +113,10 @@ const App = (() => {
 
     if (!options.lowercase && !options.uppercase && !options.number && !options.symbols) {
       DOMHandler.passwordInput.value = '';
+      for (let i = 0; i < DOMHandler.bars.length; i++) {
+        DOMHandler.bars[i].className = 'bar'; 
+      }
+      DOMHandler.tough.textContent = '';
       return;
     }
 
@@ -173,6 +177,5 @@ const App = (() => {
 
   return { init };
 })();
-
 
 App.init();
