@@ -1,4 +1,4 @@
-// Оптимізований DOMHandler
+//NOTE - DOMHandler
 const DOMHandler = (() => {
   function $(selector) {
     return document.querySelector(selector);
@@ -20,7 +20,7 @@ const DOMHandler = (() => {
   };
 })();
 
-// Оптимізований обробник для range input
+//NOTE - обробник для range input
 DOMHandler.rangeInput.addEventListener('input', function () {
   const value = parseInt(DOMHandler.rangeInput.value, 10);
   const min = parseInt(DOMHandler.rangeInput.min, 10);
@@ -30,7 +30,7 @@ DOMHandler.rangeInput.addEventListener('input', function () {
   DOMHandler.lengthText.textContent = value;
 });
 
-// Оптимізований CharacterHandler
+//NOTE - CharacterHandler
 const CharacterHandler = (() => {
   const symbols = [
     "~", "`", "!", "@", "#", "$", "%", "^", "&", "*",
@@ -79,7 +79,7 @@ const CharacterHandler = (() => {
   return { getAvailableCharacters };
 })();
 
-// Оптимізований PasswordGenerator
+//NOTE - PasswordGenerator
 const PasswordGenerator = (() => {
   function generatePassword(length, options) {
     const availableCharacters = CharacterHandler.getAvailableCharacters(options);
@@ -96,7 +96,7 @@ const PasswordGenerator = (() => {
   return { generatePassword };
 })();
 
-// Оптимізований основний модуль App
+//NOTE - основний модуль App
 const App = (() => {
   const options = {
     lowercase: false,
@@ -174,5 +174,5 @@ const App = (() => {
   return { init };
 })();
 
-// Ініціалізація програми
+
 App.init();
