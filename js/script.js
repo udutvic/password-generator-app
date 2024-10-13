@@ -1,4 +1,4 @@
-//NOTE - DOMHandler
+// NOTE - DOMHandler
 const DOMHandler = (() => {
   function $(selector) {
     return document.querySelector(selector);
@@ -20,83 +20,53 @@ const DOMHandler = (() => {
   };
 })();
 
-//NOTE - обробник для range input
+// NOTE - обробник для range input
 DOMHandler.rangeInput.addEventListener('input', function () {
   const value = parseInt(DOMHandler.rangeInput.value, 10);
   const min = parseInt(DOMHandler.rangeInput.min, 10);
   const max = parseInt(DOMHandler.rangeInput.max, 10);
   const percentage = ((value - min) * 100) / (max - min);
-  DOMHandler.rangeInput.style.background = 'linear-gradient(to right, #A4FFAF ' + percentage + '%, #18171F ' + percentage + '%)';
+  DOMHandler.rangeInput.style.background = `linear-gradient(to right, #A4FFAF ${percentage}%, #18171F ${percentage}%)`;
   DOMHandler.lengthText.textContent = value;
 });
 
-//NOTE - CharacterHandler
+// NOTE - CharacterHandler
 const CharacterHandler = (() => {
-  const symbols = [
-    "~", "", "!", "@", "#", "$", "%", "^", "&", "*",
-    "(", ")", "_", "-", "+", "=", "{", "}", "[", "]",
-    "|", ":", ";", "'", "<", ">", ",", ".", "?", "/"
-  ];
-  const numbers = [
-    "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"
-  ];
-  const lowercase = [
-    "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-    "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
-    "u", "v", "w", "x", "y", "z"
-  ];
-  const uppercase = [
-    "A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
-    "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T",
-    "U", "V", "W", "X", "Y", "Z"
-  ];
+  const symbols = "~!@#$%^&*()_-+={}[]|:;'<>,.?/".split('');
+  const numbers = "0123456789".split('');
+  const lowercase = "abcdefghijklmnopqrstuvwxyz".split('');
+  const uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('');
 
   function getAvailableCharacters(options) {
-    let result = [];
-    if (options.symbols) {
-      for (let i = 0; i < symbols.length; i++) {
-        result.push(symbols[i]);
-      }
-    }
-    if (options.number) {
-      for (let i = 0; i < numbers.length; i++) {
-        result.push(numbers[i]);
-      }
-    }
-    if (options.lowercase) {
-      for (let i = 0; i < lowercase.length; i++) {
-        result.push(lowercase[i]);
-      }
-    }
-    if (options.uppercase) {
-      for (let i = 0; i < uppercase.length; i++) {
-        result.push(uppercase[i]);
-      }
-    }
-    return result;
+    return [
+      ...(options.symbols ? symbols : []),
+      ...(options.number ? numbers : []),
+      ...(options.lowercase ? lowercase : []),
+      ...(options.uppercase ? uppercase : [])
+    ];
   }
 
   return { getAvailableCharacters };
 })();
 
-//NOTE - PasswordGenerator
+// NOTE - PasswordGenerator
 const PasswordGenerator = (() => {
   function generatePassword(length, options) {
     const availableCharacters = CharacterHandler.getAvailableCharacters(options);
     if (availableCharacters.length === 0) return '';
 
-    let password = '';
+    const password = new Array(length);
+    const availableLength = availableCharacters.length;
     for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * availableCharacters.length);
-      password += availableCharacters[randomIndex];
+      password[i] = availableCharacters[Math.floor(Math.random() * availableLength)];
     }
-    return password;
+    return password.join('');
   }
 
   return { generatePassword };
 })();
 
-//NOTE - основний модуль App
+// NOTE - основний модуль App
 const App = (() => {
   const options = {
     lowercase: false,
@@ -106,16 +76,13 @@ const App = (() => {
   };
 
   function updatePassword() {
-    for (let i = 0; i < DOMHandler.inputs.length; i++) {
-      const input = DOMHandler.inputs[i];
+    for (const input of DOMHandler.inputs) {
       options[input.id] = input.checked;
     }
 
-    if (!options.lowercase && !options.uppercase && !options.number && !options.symbols) {
+    if (!Object.values(options).some(Boolean)) {
       DOMHandler.passwordInput.value = '';
-      for (let i = 0; i < DOMHandler.bars.length; i++) {
-        DOMHandler.bars[i].className = 'bar'; 
-      }
+      DOMHandler.bars.forEach(bar => bar.className = 'bar');
       DOMHandler.tough.textContent = '';
       return;
     }
@@ -123,9 +90,7 @@ const App = (() => {
     const length = parseInt(DOMHandler.rangeInput.value, 10);
     DOMHandler.lengthText.textContent = length;
 
-    for (let i = 0; i < DOMHandler.bars.length; i++) {
-      DOMHandler.bars[i].className = 'bar';
-    }
+    DOMHandler.bars.forEach(bar => bar.className = 'bar');
 
     let strengthClass = '';
     let strengthText = '';
@@ -145,10 +110,12 @@ const App = (() => {
 
     DOMHandler.tough.textContent = strengthText;
     if (strengthClass) {
-      const strengthLevelsMap = { 'hard': 4, 'medium': 3, 'weak': 2, 'too-weak': 1 };
-      for (let i = 0; i < strengthLevelsMap[strengthClass]; i++) {
-        DOMHandler.bars[i].classList.add(strengthClass);
-      }
+      const strengthLevels = { 'hard': 4, 'medium': 3, 'weak': 2, 'too-weak': 1 };
+      DOMHandler.bars.forEach((bar, index) => {
+        if (index < strengthLevels[strengthClass]) {
+          bar.classList.add(strengthClass);
+        }
+      });
     }
 
     DOMHandler.passwordInput.value = PasswordGenerator.generatePassword(length, options);
@@ -157,16 +124,14 @@ const App = (() => {
   function copyPassword() {
     const password = DOMHandler.passwordInput.value;
     if (password) {
-      navigator.clipboard.writeText(password).then(function () {
+      navigator.clipboard.writeText(password).then(() => {
         DOMHandler.copyText.textContent = 'copied';
         DOMHandler.copyText.classList.add('copied');
-        setTimeout(function () {
+        setTimeout(() => {
           DOMHandler.copyText.classList.remove('copied');
           DOMHandler.copyText.textContent = '';
         }, 2000);
-      }).catch(function (err) {
-        console.error('Failed to copy: ', err);
-      });
+      }).catch(err => console.error('Failed to copy: ', err));
     }
   }
 
