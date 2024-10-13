@@ -1,0 +1,348 @@
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "JetBrains Mono", monospace;
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background-color: #18171f;
+}
+
+.wrapper {
+  width: 540px;
+}
+
+h1,
+.char,
+input[type="text"],
+.stren > p,
+.tough,
+.gener span {
+  font-feature-settings: "liga" off, "clig" off;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+h1 {
+  color: #817d92;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+
+.char p {
+  font-size: 18px;
+  text-align: left;
+  margin: 0;
+  color: #e6e5ea;
+}
+
+.head {
+  background-color: #24232c;
+  margin-bottom: 24px;
+  height: 80px;
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-box {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  position: relative;
+}
+
+.copy-text {
+  position: absolute;
+  left: -72px;
+  font-size: 18px;
+  text-transform: uppercase;
+  color: #a4ffaf;
+}
+
+.copied {
+  transition: all 2s;
+  opacity: 0;
+}
+
+.copy {
+  background-color: inherit;
+  border: none;
+  cursor: pointer;
+  height: 24px;
+  transition: fill 0.3s;
+}
+
+.copy svg:hover path {
+  fill: #fff;
+}
+
+.main {
+  background-color: #24232c;
+  padding: 24px 32px 32px;
+}
+
+.char {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 42px;
+  margin-bottom: 16px;
+}
+
+.length {
+  font-size: 32px;
+  color: #a4ffaf;
+}
+
+input[type="text"] {
+  background-color: #24232c;
+  border: none;
+  color: #e6e5ea;
+  font-size: 32px;
+  outline: none;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  height: 8px;
+  background-color: #a4ffaf;
+  width: 100%;
+  background: linear-gradient(to right, #a4ffaf 50%, #18171f 50%);
+  outline: none;
+  transition: background 0.3s;
+  margin-bottom: 42px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 28px;
+  height: 28px;
+  background-color: #e6e5ea;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  border: 2px solid #a4ffaf;
+  background-color: #18171f;
+}
+
+.field {
+  font-size: 18px;
+  color: #e6e5ea;
+  display: flex;
+  column-gap: 24px;
+}
+
+.field:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+input[type="checkbox"] {
+  background-color: #18171f;
+  border: 2px solid #fff;
+  width: 20px;
+  height: 20px;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+input[type="checkbox"]:checked {
+  background-color: #a4ffaf;
+  border: none;
+}
+
+input[type="checkbox"]:checked::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 2px;
+  width: 16px;
+  height: 14px;
+  background-image: url(../assets/images/icon-check.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.include {
+  margin-bottom: 32px;
+}
+
+.stren {
+  height: 72px;
+  background-color: #18171f;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  margin-bottom: 32px;
+}
+
+.stren > p {
+  text-transform: uppercase;
+  color: #817d92;
+  font-size: 18px;
+}
+
+.tough {
+  text-transform: uppercase;
+  color: #e6e5ea;
+  font-size: 24px;
+}
+
+.stren > div {
+  display: flex;
+  column-gap: 16px;
+  align-items: center;
+}
+
+.indicator {
+  display: flex;
+  column-gap: 8px;
+  width: 64px;
+  height: 28px;
+}
+
+.bar {
+  width: 10px;
+  height: 28px;
+  border: 2px solid #e6e5ea;
+}
+
+.hard {
+  background-color: #a4ffaf;
+  border: none;
+}
+
+.medium {
+  background-color: #f8cd65;
+  border: none;
+}
+
+.weak {
+  background-color: #fb7c58;
+  border: none;
+}
+
+.too-weak {
+  background-color: #f64a4a;
+  border: none;
+}
+
+.gener {
+  height: 65px;
+  background-color: #a4ffaf;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, border 0.3s;
+}
+
+.gener span {
+  color: #24232c;
+  text-transform: uppercase;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 18px;
+  padding-right: 36px;
+  background-image: url(../assets/images/icon-arrow-right.svg);
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.gener:hover {
+  background-color: #18171f;
+  border: 2px solid #a4ffaf;
+}
+
+.gener:hover span {
+  color: #a4ffaf;
+  background-image: url(../assets/images/icon-arrow-right-hover.svg);
+}
+
+@media (max-width: 575px) {
+  .wrapper {
+    width: 343px;
+  }
+
+  h1 {
+    font-size: 16px;
+  }
+
+  input[type="text"] {
+    font-size: 18px;
+  }
+
+  .head {
+    height: 64px;
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  .copy-text {
+    font-size: 16px;
+    left: -62px;
+  }
+
+  .copy svg {
+    transform: scale(0.84);
+    transform-origin: center;
+  }
+
+  .main {
+    padding: 21px 16px 16px;
+  }
+
+  .char p {
+    font-size: 16px;
+  }
+
+  .length {
+    font-size: 24px;
+  }
+
+  .field {
+    font-size: 16px;
+  }
+
+  .stren {
+    padding: 0 16px;
+    margin-bottom: 16px;
+  }
+
+  .stren > p {
+    font-size: 16px;
+  }
+
+  .tough {
+    font-size: 18px;
+  }
+
+  .gener {
+    height: 56px;
+  }
+
+  .gener span {
+    font-size: 16px;
+    padding-right: 28px;
+  }
+}
